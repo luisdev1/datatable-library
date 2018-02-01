@@ -3,6 +3,7 @@ Esta é uma biblioteca voltada para o framework Codeigniter com objetivo de faci
 
 ## Exemplo de Uso:
 
+```php
 $config = array(
 	'table_name' => 'users',
 	'order_columns' => array('name', 'email'),
@@ -14,9 +15,9 @@ $config = array(
 $this->load->library('datatable', $config);
 
 $result = $this->datatable->make_table();
-
+```
 ## Exemplo de uso customizado dos valores retornados:
-
+```php
 $data = array();
 foreach ($result as $row) {
 	$array = array();
@@ -27,7 +28,8 @@ foreach ($result as $row) {
 }
 
 echo $this->datatable->get_table($data);
-
+```
 ## Uso sem modificações dos valores retornados:
-
+```php
 echo $this->datatable->get_table();
+```
