@@ -6,13 +6,13 @@
  * @license     http://opensource.org/licenses/MIT  MIT License
  */
 
-class Datatable {
+class Datatable 
+{
 	
     /*
      * Tabela do banco de dados
      * @var string
      */
-
     protected $table_name = '';
 
     /*
@@ -61,7 +61,8 @@ class Datatable {
      * @param $config array()
      * @return void
      */
-    public function initialize($config = array()) {
+    public function initialize($config = array()) 
+    {
     	foreach ($config as $key => $val) {
     		if (isset($this->$key)) {
     			$method = 'set_' . $key;
@@ -75,8 +76,13 @@ class Datatable {
     	return $this;
     }    
     
-    // MONTANDO QUERY PARA A DATATABLE
-    public function make_query() {
+    /**
+     * 
+     *
+     * @return void
+     */
+    public function make_query() 
+    {
     	$search = $this->input->post('search', TRUE);
     	$order = $this->input->post('order', TRUE);
     	$order_column = array($this->order_columns);
@@ -111,8 +117,13 @@ class Datatable {
     	}
     }
     
-    // CONSTRUINDO A TABELA A PARTIR DO LIMITE
-    public function make_table() {
+    /**
+     * 
+     *
+     * @return mixed
+     */
+    public function make_table() 
+    {
     	$this->make_query();
     	if($this->input->post('length') > -1){
     		$this->db->limit($this->input->post('length'), $this->input->post('start'));
@@ -121,13 +132,25 @@ class Datatable {
     	return $query->result_array();
     }
     
-    public function get_filtered_data() {
+    /**
+     * 
+     *
+     * @return mixed
+     */
+    public function get_filtered_data() 
+    {
     	$this->make_query();        
     	$query = $this->db->get();
     	return $query->num_rows();
     }
     
-    public function get_all_data() {
+    /**
+     * 
+     *
+     * @return int
+     */
+    public function get_all_data() 
+    {
     	$this->db->select('*');
     	$this->db->from($this->table_name);
     	if(is_array($this->where) && count($this->where) > 0){
@@ -136,10 +159,14 @@ class Datatable {
     	return $this->db->count_all_results();
     }  
 
-    /*
+    /**
      * Retorna a tabela construída a partir da $data passada
+     *
+     * @param mixed $data
+     * @return json
      */
-    public function get_table($data = array()) {
+    public function get_table($data = array()) 
+    {
     	if(count($data) == 0){
     		$data = array();
     		$result = array_values($this->make_table());
@@ -158,4 +185,4 @@ class Datatable {
     	return json_encode($output, JSON_UNESCAPED_UNICODE);
     }   
 
-  }
+}
